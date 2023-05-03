@@ -26,4 +26,8 @@ target/
 .idea/
 *.idea
 *.iml
+<<<<<<< HEAD
 *.pb
+=======
+*.pb
+>>>>>>> remotes/origin/main
