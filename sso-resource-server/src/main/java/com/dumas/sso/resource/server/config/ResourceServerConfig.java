@@ -40,7 +40,7 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                // 对于 userInfo 这个api 需要 s
+                // 对于 userInfo 这个api 需要权限
                 .antMatchers("/userInfo").access("hasAuthority('user.userInfo')")
                 .and()
                 // 设置session是无状态的
@@ -116,7 +116,7 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
      */
     public JwtDecoder jwtDecoder(RestTemplateBuilder builder) {
         // 授权服务器 jwk 的信息
-        NimbusJwtDecoder decoder = NimbusJwtDecoder.withJwkSetUri("http://qq.com:8080/oauth2/jwks")
+        NimbusJwtDecoder decoder = NimbusJwtDecoder.withJwkSetUri("http://localhost:8081/oauth2/jwks")
                 // 设置获取 jwk 信息的超时时间
                 .restOperations(
                         builder.setReadTimeout(Duration.ofSeconds(3))

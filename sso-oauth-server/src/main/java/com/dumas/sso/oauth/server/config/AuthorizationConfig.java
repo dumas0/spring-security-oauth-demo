@@ -95,7 +95,7 @@ public class AuthorizationConfig {
                 // 客户端id 需要唯一
                 .clientId("csdn")
                 // 客户端密码
-                .clientSecret(passwordEncoder.encode("csdn123"))
+                .clientSecret(this.passwordEncoder.encode("csdn123"))
                 // 可以基于 basic 的方式和授权服务器进行认证
                 .clientAuthenticationMethod(ClientAuthenticationMethod.BASIC)
                 // 授权码
@@ -114,7 +114,7 @@ public class AuthorizationConfig {
                 .scope("user.userInfo")
                 .scope("user.photos")
                 // 是否需要用户确认一下客户端需要获取用户的哪些权限
-                // 比如：客户端需要获取用户的 用户信息、用户照片 但是此处用户可以控制只给客户端授权获取 用户信息。
+                // 比如：客户端需要获取用户的 用户信息、用户照片 但是此处用户可以控制只给客户端授权获取用户信息。
                 .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
                 .tokenSettings(
                         TokenSettings.builder()
@@ -132,7 +132,7 @@ public class AuthorizationConfig {
         if (null == registeredClientRepository.findByClientId("csdn")) {
             registeredClientRepository.save(registeredClient);
         }
-		return registeredClientRepository;
+        return registeredClientRepository;
     }
 
     /**
