@@ -97,7 +97,7 @@ public class AuthorizationConfig {
                 // 客户端密码
                 .clientSecret(this.passwordEncoder.encode("csdn123"))
                 // 可以基于 basic 的方式和授权服务器进行认证
-                .clientAuthenticationMethod(ClientAuthenticationMethod.BASIC)
+                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 // 授权码
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 // 刷新token

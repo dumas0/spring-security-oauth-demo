@@ -1,5 +1,6 @@
 package com.dumas.sso.resource.server.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ public class UserController {
     /**
      * 这个是受保护的资源，需要 user.userInfo 权限才可以访问。
      */
+    @PreAuthorize("hasAuthority('user.userInfo')")
     @GetMapping("userInfo")
     public Map<String, Object> userInfo(@AuthenticationPrincipal Jwt principal) {
         return new HashMap<String, Object>(4) {{
