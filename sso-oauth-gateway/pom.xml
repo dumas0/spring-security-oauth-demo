@@ -11,13 +11,13 @@
     </parent>
 
     <groupId>com.dumas.sso</groupId>
-    <artifactId>sso-resource-server</artifactId>
+    <artifactId>sso-oauth-gateway</artifactId>
     <packaging>jar</packaging>
     <version>1.0.0-SNAPSHOT</version>
 
-    <name>sso-resource-server</name>
+    <name>sso-oauth-gateway</name>
     <description>
-        Spring Security Resource Server
+        Spring Cloud Gateway
     </description>
 
     <dependencies>
@@ -26,12 +26,12 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

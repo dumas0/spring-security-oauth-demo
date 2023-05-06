@@ -67,6 +67,8 @@
     <modules>
         <module>sso-oauth-server</module>
         <module>sso-resource-server</module>
+        <module>sso-oauth-gateway</module>
+        <module>sso-user-provider</module>
     </modules>
 
     <!--构建-->
