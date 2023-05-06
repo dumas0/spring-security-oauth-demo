@@ -200,7 +200,7 @@ public class AuthorizationConfig {
     public AuthorizationServerSettings authorizationServerSettings() {
         return AuthorizationServerSettings.builder()
                 .tokenEndpoint("/oauth2/token")
-                .issuer("http://qq.com:8081")
+                .issuer("http://localhost:8081")
                 .build();
     }
 }
