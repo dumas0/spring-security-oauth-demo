@@ -1,11 +1,6 @@
 spring:
   application:
     name: sso-oauth-server
-  datasource:
-    url: jdbc:mysql://127.0.0.1:3306/oauth?useUnicode=false&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&allowPublicKeyRetrieval=true&failOverReadOnly=false&serverTimezone=GMT%2B8
-    username: root
-    password: root
-    driver-class-name: com.mysql.cj.jdbc.Driver
   cloud:
     nacos:
       config:
@@ -15,23 +10,3 @@ spring:
         namespace: 4d52877e-40eb-490b-9353-655b98b8f6af
         extension-configs:
           - data-id: sso-oauth-discovery.yml
-
-knife4j:
-  enable: true
-  openapi:
-    title: Knife4j官方文档
-    description: "`我是测试`,**你知道吗**
-    # aaa"
-    email: xiaoymin@foxmail.com
-    concat: 八一菜刀
-    url: https://docs.xiaominfo.com
-    version: v4.0
-    license: Apache 2.0
-    license-url: https://stackoverflow.com/
-    terms-of-service-url: https://stackoverflow.com/
-    group:
-      test1:
-        group-name: 分组名称
-        api-rule: package
-        api-rule-resources:
-          - com.dumas.sso
