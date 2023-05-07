@@ -1,6 +1,8 @@
 spring:
   application:
     name: sso-oauth-gateway
+  main:
+    allow-bean-definition-overriding: true
   cloud:
     nacos:
       config:
