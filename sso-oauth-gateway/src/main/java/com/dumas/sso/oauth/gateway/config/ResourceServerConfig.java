@@ -57,7 +57,7 @@ public class ResourceServerConfig {
                 .and()
                 .authorizeExchange()
                 // 所有以 /auth/** 开头的请求全部放行
-                .pathMatchers("/auth/**", "/favicon.ico").permitAll()
+                .pathMatchers("/oauth2/**", "/favicon.ico").permitAll()
                 // 所有的请求都交由此处进行权限判断处理
                 .anyExchange()
                 .access(customReactiveAuthorizationManager)
