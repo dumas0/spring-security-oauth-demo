@@ -15,6 +15,8 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 /**
  * 将 token 信息传递到下游服务中
  *
@@ -25,15 +27,20 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class TokenTransferFilter implements WebFilter {
 
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private final List<String> skipPaths;
 
-    static {
-        OBJECT_MAPPER.registerModule(new Jdk8Module());
-        OBJECT_MAPPER.registerModule(new JavaTimeModule());
+    public TokenTransferFilter(List<String> skipPaths) {
+        this.skipPaths = skipPaths;
     }
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+        String path = exchange.getRequest().getURI().getPath();
+        if (skipPaths.stream()
+                .map(skipPath -> skipPath.replaceAll("\\*", ".*"))
+                .anyMatch(path::matches)) {
+            return chain.filter(exchange);
+        }
         return ReactiveSecurityContextHolder.getContext()
                 .map(SecurityContext::getAuthentication)
                 .cast(JwtAuthenticationToken.class)
@@ -47,13 +54,5 @@ public class TokenTransferFilter implements WebFilter {
 
                     return chain.filter(newExchange);
                 });
-    }
-
-    public String toJson(Object obj) {
-        try {
-            return OBJECT_MAPPER.writeValueAsString(obj);
-        } catch (JsonProcessingException e) {
-            return null;
-        }
     }
 }

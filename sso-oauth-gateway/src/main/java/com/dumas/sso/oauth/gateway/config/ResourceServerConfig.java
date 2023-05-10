@@ -29,7 +29,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Arrays;
 import java.util.Base64;
+import java.util.List;
 
 /**
  * @author dumas
@@ -42,8 +44,13 @@ public class ResourceServerConfig {
     @Autowired
     private CustomReactiveAuthorizationManager customReactiveAuthorizationManager;
 
+    private static final List<String> skipPaths = Arrays.asList("/oauth2/**",
+            "/doc.html/**", "/webjars/**", "/swagger-ui.html",
+            "/v2/**", "/swagger-resources", "swagger-resources/**", "/favicon.ico");
+
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) throws NoSuchAlgorithmException, IOException, InvalidKeySpecException {
+
         http.oauth2ResourceServer()
                 .jwt()
                 .jwtAuthenticationConverter(jwtAuthenticationConverter())
@@ -58,7 +65,7 @@ public class ResourceServerConfig {
                 .and()
                 .authorizeExchange()
                 // 所有以 /oauth2/** 开头的请求全部放行
-                .pathMatchers("/oauth2/**", "/favicon.ico").permitAll()
+                .pathMatchers(skipPaths.toArray(new String[0])).permitAll()
                 // 所有的请求都交由此处进行权限判断处理
                 .anyExchange()
                 .access(customReactiveAuthorizationManager)
@@ -69,10 +76,9 @@ public class ResourceServerConfig {
                 .and()
                 .csrf()
                 .disable()
-                .addFilterAfter(new TokenTransferFilter(), SecurityWebFiltersOrder.AUTHENTICATION);
-
-//                .addFilterBefore(new IPFilter("127.0.0.1"), SecurityWebFiltersOrder.FIRST)
-//                .addFilterAfter(new RateLimitFilter(10), SecurityWebFiltersOrder.AUTHENTICATION)
+                .addFilterBefore(new IPFilter("127.0.0.1"), SecurityWebFiltersOrder.FIRST)
+                .addFilterAfter(new RateLimitFilter(10), SecurityWebFiltersOrder.AUTHENTICATION)
+                .addFilterAfter(new TokenTransferFilter(skipPaths), SecurityWebFiltersOrder.AUTHENTICATION);
         return http.build();
     }
 
