@@ -1,5 +1,6 @@
 package com.dumas.sso.oauth.gateway.config;
 
+import com.dumas.sso.oauth.gateway.service.IpWhiteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -75,7 +76,7 @@ public class ResourceServerConfig {
                 .and()
                 .csrf()
                 .disable()
-                .addFilterBefore(new IPFilter("127.0.0.1"), SecurityWebFiltersOrder.FIRST)
+                .addFilterBefore(new IPFilter("127.0.0.1", "0:0:0:0:0:0:0:1"), SecurityWebFiltersOrder.FIRST)
                 .addFilterAfter(new RateLimitFilter(10), SecurityWebFiltersOrder.AUTHENTICATION)
                 .addFilterAfter(new TokenTransferFilter(skipPaths), SecurityWebFiltersOrder.AUTHENTICATION);
         return http.build();

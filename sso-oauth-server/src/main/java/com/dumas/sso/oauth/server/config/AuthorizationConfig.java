@@ -1,6 +1,5 @@
 package com.dumas.sso.oauth.server.config;
 
-import com.dumas.sso.oauth.server.jose.Jwks;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -189,7 +188,7 @@ public class AuthorizationConfig {
 //        return (jwkSelector, securityContext) -> jwkSelector.select(jwkSet);
 //    }
 
-       /**
+    /**
      * 对JWT进行签名的 加解密密钥
      */
     @Bean
