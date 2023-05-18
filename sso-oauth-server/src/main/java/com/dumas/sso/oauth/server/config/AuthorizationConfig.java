@@ -57,12 +57,9 @@ public class AuthorizationConfig {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    class CustomOAuth2TokenCustomizer implements OAuth2TokenCustomizer<JwtEncodingContext> {
-        @Override
-        public void customize(JwtEncodingContext context) {
-            context.getJwsHeader().header("client-id", context.getRegisteredClient().getClientId());
-            context.getJwsHeader().header("authorization-grant-type", context.getAuthorizationGrantType().getValue());
-        }
+    @Bean
+    public OAuth2TokenCustomizer<JwtEncodingContext> customOAuth2TokenCustomizer() {
+        return new CustomOAuth2TokenCustomizer();
     }
 
     /**
@@ -70,9 +67,10 @@ public class AuthorizationConfig {
      */
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
-    public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http,
+                                                                      OAuth2TokenCustomizer<JwtEncodingContext> customOAuth2TokenCustomizer) throws Exception {
         // 设置jwt token个性化
-        http.setSharedObject(OAuth2TokenCustomizer.class, new CustomOAuth2TokenCustomizer());
+        http.setSharedObject(OAuth2TokenCustomizer.class, customOAuth2TokenCustomizer);
         // 授权服务器配置
         OAuth2AuthorizationServerConfigurer authorizationServerConfigurer =
                 new OAuth2AuthorizationServerConfigurer();
