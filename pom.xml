@@ -69,6 +69,7 @@
         <module>sso-resource-server</module>
         <module>sso-oauth-gateway</module>
         <module>sso-user-provider</module>
+        <module>sso-mybatis-plus-generator</module>
     </modules>
 
     <!--构建-->
